@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Score Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/predictor.css" />
+</head>
+<body>
+
+<nav>
+    <div class="logo">📊 Student Analyzer</div>
+    <div>
+        <a href="/">Home</a>
+        <a href="/#about">About</a>
+        <a href="/#features">Features</a>
+        <a href="/#contact">Contact</a>
+        <a href="/predictor">Predict</a>
+    </div>
+</nav>
+
+<div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<div class="container">
+    <h1>🎯 Student Score Predictor</h1>
+    
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <form action="/predict" method="post">
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Select Model:</label>
+                <select name="model_choice" required>
+                    <option value="">Choose AI Model</option>
+                    <option value="lgbm">🚀 LightGBM</option>
+                    <option value="xgb">⚡ XGBoost</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Gender:</label>
+                <select name="Gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="1">👨 Male</option>
+                    <option value="0">👩 Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Hours Studied:</label>
+                <input type="number" name="Hours_Studied" min="0" max="24" step="0.1" required>
+                <span class="input-icon"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Previous Exam Score:</label>
+                <input type="number" name="Previous_Score" min="0" max="100" step="0.1" required>
+                <span class="input-icon"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Attendance (%):</label>
+                <input type="number" name="Attendance" min="0" max="100" step="0.1" required>
+                <span class="input-icon"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Extra Curricular Hours:</label>
+                <input type="number" name="Extra" min="0" max="20" step="0.1" required>
+                <span class="input-icon"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Sleep Hours:</label>
+                <input type="number" name="Sleep" min="0" max="24" step="0.1" required>
+                <span class="input-icon"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Health Issues:</label>
+                <select name="Health" required>
+                    <option value="">Select</option>
+                    <option value="1">🤒 Yes</option>
+                    <option value="0">💪 No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-preview" id="statsPreview">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalHours">0</div>
+                    <div>Total Hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="completion">0%</div>
+                    <div>Form Complete</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="readiness">🔄</div>
+                    <div>Status</div>
+                </div>
+            </div>
+        </div>
+
+        <p id="hour-status">⚠️ Total time exceeds 24 hours! Please adjust.</p>
+        <button class="submit-btn" type="submit">🚀 Predict Score</button>
+    </form>
+
+    <footer>© 2025 Celebal Internship Project | Student Performance Predictor</footer>
+</div>
+
+<script>
+    const studyInput = document.querySelector('input[name="Hours_Studied"]');
+    const extraInput = document.querySelector('input[name="Extra"]');
+    const sleepInput = document.querySelector('input[name="Sleep"]');
+    const hourStatus = document.getElementById('hour-status');
+    const progressFill = document.getElementById('progressFill');
+    const statsPreview = document.getElementById('statsPreview');
+    const totalHours = document.getElementById('totalHours');
+    const completion = document.getElementById('completion');
+    const readiness = document.getElementById('readiness');
+
+    const updateProgress = () => {
+        const inputs = document.querySelectorAll('input[required], select[required]');
+        let filled = 0;
+        inputs.forEach(input => {
+            if (input.value.trim() !== '') filled++;
+        });
+        const progress = (filled / inputs.length) * 100;
+        progressFill.style.width = progress + '%';
+        completion.textContent = Math.round(progress) + '%';
+        
+        if (progress > 50) {
+            statsPreview.style.display = 'block';
+        }
+    };
+
+    const updateHourLimits = () => {
+        const study = parseFloat(studyInput.value) || 0;
+        const extra = parseFloat(extraInput.value) || 0;
+        const sleep = parseFloat(sleepInput.value) || 0;
+        const total = study + extra + sleep;
+
+        studyInput.max = (24 - extra - sleep).toFixed(1);
+        extraInput.max = (24 - study - sleep).toFixed(1);
+        sleepInput.max = (24 - study - extra).toFixed(1);
+
+        totalHours.textContent = total.toFixed(1);
+        
+        if (total > 24) {
+            hourStatus.style.display = 'block';
+            readiness.textContent = '⚠️';
+        } else if (total > 0) {
+            hourStatus.style.display = 'none';
+            readiness.textContent = '✅';
+        } else {
+            readiness.textContent = '🔄';
+        }
+    };
+
+    document.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', () => {
+            updateProgress();
+            updateHourLimits();
+        });
+    });
+</script>
+
+</body>
+</html>

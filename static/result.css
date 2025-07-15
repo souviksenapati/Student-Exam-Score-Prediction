@@ -1,0 +1,182 @@
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+html { scroll-padding-top: 100px; }
+body { font-family: 'Inter', sans-serif; color: #222; }
+
+nav {
+    position: fixed; top: 0; left: 0; width: 100%;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
+    padding: 18px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 999; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+}
+nav .logo {
+    font-size: 26px; font-weight: 800; color: #1A2980;
+}
+nav a {
+    color: #1A2980; text-decoration: none; margin-left: 35px;
+    font-weight: 600; font-size: 16px;
+    position: relative; transition: 0.4s;
+}
+nav a::after {
+    content: ""; position: absolute; left: 0; bottom: -5px;
+    width: 0%; height: 2px; background: #26D0CE;
+    transition: width 0.4s ease;
+}
+nav a:hover::after { width: 100%; }
+
+body {
+    background: linear-gradient(135deg, #1A2980, #26D0CE);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+    min-height: 100vh;
+    padding: 50px 20px 20px;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    max-width: 850px;
+    margin: 60px auto;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    text-align: center;
+    color: #1A2980;
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.score-box {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #1A2980;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #26D0CE;
+}
+
+.status-box {
+    background: linear-gradient(90deg, #1A2980, #26D0CE);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+h3 {
+    margin-top: 30px;
+    color: #1A2980;
+    font-size: 22px;
+    border-bottom: 2px solid #26D0CE;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+.feature-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.badge {
+    padding: 15px 25px;
+    background: linear-gradient(90deg, #26D0CE, #1A2980);
+    border-radius: 50px;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+.suggestion-box {
+    background: linear-gradient(135deg, #fff3cd, #fef3c7);
+    padding: 20px;
+    border-left: 6px solid #26D0CE;
+    margin-top: 40px;
+    border-radius: 10px;
+    font-size: 17px;
+    color: #1A2980;
+}
+
+.feedback-line {
+    background: linear-gradient(135deg, #eafaf1, #dcfce7);
+    padding: 15px;
+    border-left: 5px solid #26D0CE;
+    margin-top: 30px;
+    border-radius: 10px;
+    color: #1A2980;
+    font-size: 17px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.button-container a {
+    text-decoration: none;
+    background: #1A2980;
+    color: white;
+    padding: 14px 35px;
+    border-radius: 30px;
+    font-size: 18px;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+}
+
+.button-container a:hover {
+    background: #26D0CE;
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #fff;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 15px 20px;
+    }
+    nav .logo {
+        font-size: 22px;
+    }
+    nav a {
+        margin-left: 20px;
+        font-size: 14px;
+    }
+    .container {
+        margin: 20px auto;
+        padding: 30px 20px;
+    }
+}
