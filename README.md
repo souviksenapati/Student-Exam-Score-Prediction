@@ -87,7 +87,7 @@ python app.py
 
 | Input Form | Prediction Result |
 |------------|-------------------|
-| ![Form](Final_Project/screenshots/form.png) | ![Result](Final_Project/screenshots/result.png) |
+| ![Form](screenshots/form.png) | ![Result](screenshots/result.png) |
 
 
 ---
