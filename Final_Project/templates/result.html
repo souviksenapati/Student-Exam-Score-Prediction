@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Performance Insights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/result.css" />
+    <style>
+        .container h1 { font-size: 32px !important; font-weight: 600 !important; margin-bottom: 30px !important; }
+        .container h3 { font-size: 22px !important; font-weight: 600 !important; margin-top: 30px !important; padding-bottom: 5px !important; }
+        .container { padding: 40px 50px !important; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">📊 Student Analyzer</div>
+    <div>
+        <a href="/">Home</a>
+        <a href="/#about">About</a>
+        <a href="/#features">Features</a>
+        <a href="/#contact">Contact</a>
+        <a href="/predictor">Predict</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Student Performance Insights</h1>
+
+    <div class="score-box">
+        🎯 Predicted Student Score: <b>{{ prediction }}</b>
+    </div>
+
+    <div class="status-box">
+        Status: {{ status }}
+    </div>
+
+    <h3>Key Factors Influencing Prediction:</h3>
+
+    <div class="feature-badges">
+        {% for feature, impact in explanation %}
+        <div class="badge">{{ feature }}: {{ '%.2f' % impact }}</div>
+        {% endfor %}
+    </div>
+
+    {% if feedback %}
+    <div class="feedback-line">
+        🧠 <b>Feedback:</b> Your score is influenced by: <b>{{ feedback }}</b>
+    </div>
+    {% endif %}
+
+    <div class="suggestion-box">
+        <b>🎯 Suggestions:</b>
+        <ul>
+            {% for s in suggestions %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="button-container">
+        <a href="/">🔙 Go Back</a>
+        <a href="#" onclick="downloadPDF(); return false;">📄 Download PDF</a>
+    </div>
+</div>
+
+<footer>© 2025 Celebal Internship Project | Student Performance Predictor</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function downloadPDF() {
+    const container = document.querySelector('.container');
+    const buttons = container.querySelector('.button-container');
+    buttons.style.display = 'none';
+
+    html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+    }).then(canvas => {
+        const { jsPDF } = window.jspdf;
+
+        const imgData = canvas.toDataURL('image/png');
+
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const maxPageHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pageWidth - 20; // margins
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Limit to max page height - margin
+        if (imgHeight > maxPageHeight - 20) {
+            imgHeight = maxPageHeight - 20;
+        }
+
+        const x = (pageWidth - imgWidth) / 2;
+        const y = 10;
+
+        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+
+        const blob = pdf.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, '_blank');
+
+        buttons.style.display = 'block';
+    });
+}
+</script>
+
+</body>
+</html>
