@@ -1,1 +1,58 @@
-Final_Project/venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+.pytest_cache/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.*
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Mac and Linux files
+.DS_Store
+*.swp
+*~
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Flask specific
+instance/
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
